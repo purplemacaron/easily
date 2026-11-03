@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { useState } from "react";
-// Deep import: presets.ts has no runtime deps, so the renderer can use it directly.
-import { PROVIDER_PRESETS, type PresetGroup, type ProviderPreset } from "@easily/core/src/providers/presets";
+// presets.ts has no runtime deps, so the renderer imports it through the dedicated `./presets` export.
+import { PROVIDER_PRESETS, type PresetGroup, type ProviderPreset } from "@easily/core/presets";
 import { ProviderLogo } from "../components/ProviderLogo";
 import styles from "./ModelsView.module.css";
 

@@ -95,7 +95,7 @@ app.on("open-url", (e, url) => {
 });
 
 void app.whenReady().then(() => {
-  app.setLoginItemSettings({ openAtLogin: true, openAsHidden: true }); // TODO: user setting
+  app.setLoginItemSettings({ openAtLogin: false }); // TODO: user setting
   registerIpc();
   createWindow();
   createTray();

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "description": "Easily — 업무 전용 데스크톱 에이전트 하네스",
-  "packageManager": "pnpm@9.12.0",
+  "packageManager": "pnpm@9.15.9",
   "engines": { "node": ">=22" },
   "scripts": {
     "dev": "pnpm --filter @easily/desktop dev",
@@ -15,6 +15,9 @@
     "format": "prettier --write .",
     "gen:features": "node scripts/gen-features-md.mjs",
     "site": "npx --yes serve site -l 4321"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["electron", "esbuild"]
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
