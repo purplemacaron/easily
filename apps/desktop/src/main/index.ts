@@ -7,6 +7,7 @@ import {
   dialog,
   ipcMain,
   nativeImage,
+  nativeTheme,
   powerMonitor,
   powerSaveBlocker,
   shell,
@@ -95,6 +96,15 @@ function createWindow(): void {
   else void win.loadFile(join(__dirname, "../renderer/index.html"));
 }
 
+/** Window controls (titleBarOverlay) and prefers-color-scheme follow the app theme setting. */
+function applyTheme(theme: "light" | "dark" | "system"): void {
+  nativeTheme.themeSource = theme;
+  const dark = nativeTheme.shouldUseDarkColors;
+  if (process.platform !== "darwin" && win && !win.isDestroyed()) {
+    win.setTitleBarOverlay({ color: dark ? "#0f0f0e" : "#ffffff", symbolColor: dark ? "#ededea" : "#111111", height: 40 });
+  }
+}
+
 function refreshTray(): void {
   if (!tray || !services) return;
   const active = services.activeCount();
@@ -154,6 +164,7 @@ function registerIpc(svc: Services): void {
       return r.canceled ? null : (r.filePaths[0] ?? null);
     },
     setLoginItem: (open) => app.setLoginItemSettings({ openAtLogin: open, args: open ? ["--hidden"] : [] }),
+    applyTheme,
     appInfo: () => ({ version: app.getVersion(), platform: process.platform, secretsAvailable: vault.available() }),
   });
 
@@ -205,6 +216,7 @@ void app.whenReady().then(async () => {
   });
   registerIpc(services);
   createWindow();
+  applyTheme(services.getSettings().theme);
   createTray();
   services.onActivity(refreshTray);
 

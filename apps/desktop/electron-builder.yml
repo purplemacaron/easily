@@ -2,7 +2,7 @@ appId: app.easily.desktop
 productName: Easily
 directories:
   buildResources: build
-  output: release/${version}
+  output: release
 files:
   - "out/**"
   - "package.json"
@@ -13,17 +13,23 @@ protocols:
     schemes: [easily]
 win:
   target: [nsis, portable]
+  icon: build/icon.png
   artifactName: Easily-${version}-win-${arch}.${ext}
 nsis:
   oneClick: true
   perMachine: false
+  artifactName: Easily-Setup-${version}-win-${arch}.${ext}
 mac:
   target: [dmg, zip]
+  icon: build/icon.png
   category: public.app-category.productivity
   artifactName: Easily-${version}-mac-${arch}.${ext}
 linux:
   target: [AppImage, deb]
+  icon: build/icon.png
   category: Office
 publish:
   provider: github
-  # owner / repo are read from the git remote by electron-builder
+  # explicit: electron-builder cannot find .git/config from apps/desktop in this monorepo
+  owner: purplemacaron
+  repo: easily

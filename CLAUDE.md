@@ -64,6 +64,8 @@ pnpm site              # 사이트 로컬 미리보기 (http://localhost:4321)
 
 - 저장소 경로가 길면(260자 초과) esbuild·electron 의 `postinstall` 이 실패한다. 이 클론은 **커밋하지 않는** 루트 `.npmrc` 에 `virtual-store-dir=C:/ez/vs` 를 두고 설치했다(`.git/info/exclude` 로 제외). 짧은 경로에 클론했다면 필요 없다.
 - `pnpm dev` 로 만든 프로필을 건드리지 않으려면 `EASILY_USER_DATA=<임시 폴더>` 로 실행한다.
+- 설치 파일: `pnpm --filter @easily/desktop dist -- --publish never` → `apps/desktop/release/`. Windows 에서 심볼릭 링크 권한이 없으면 electron-builder 가 `winCodeSign` 압축 해제에 실패한다. 이때는 `%LOCALAPPDATA%\electron-builder\Cache\winCodeSign\` 에 남은 부분 압축 해제 폴더(darwin 심볼릭 링크 2개만 빠짐)를 `winCodeSign-2.6.0` 으로 복사하고 `CSC_IDENTITY_AUTO_DISCOVERY=false` 로 다시 실행한다. 아이콘은 `node scripts/gen-icon.mjs` 로 `site/favicon.svg` 에서 생성.
+- UI 를 API 키 없이 확인하려면 `node scripts/fake-openai.mjs` (127.0.0.1:4599/v1) 를 켜고 모델 화면에서 "OpenAI 호환 API" 로 연결한다. "hello.txt" 가 들어간 메시지는 write 툴 호출을 한 번 일으키고, "느리게" 는 느린 스트림(Esc 중단 확인용)이다.
 - IPC 채널을 추가할 때: `shared/ipc.ts`(zod + 응답 타입) → `shared/channels.ts` → `main/handlers.ts`(누락 시 컴파일 오류). `ipc.test.ts` 가 두 목록의 일치를 검사한다.
 
 ## 하지 말 것

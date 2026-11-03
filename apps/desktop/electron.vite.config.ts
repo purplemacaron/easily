@@ -14,5 +14,8 @@ export default defineConfig({
       alias: { "@renderer": resolve("src/renderer/src") },
     },
     plugins: [react()],
+    // Fonts live in the pnpm store, which may sit outside the workspace (see CLAUDE.md, Windows notes).
+    // The dev server only listens on localhost for the Electron window.
+    server: { fs: { strict: false } },
   },
 });

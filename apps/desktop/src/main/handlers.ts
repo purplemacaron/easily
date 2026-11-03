@@ -17,6 +17,8 @@ export interface Platform {
   openExternal(url: string): Promise<void>;
   pickFolder(): Promise<string | null>;
   setLoginItem(open: boolean): void;
+  /** Keep native chrome (window controls, system theme) in step with the app theme. */
+  applyTheme?(theme: SettingsDTO["theme"]): void;
   appInfo(): { version: string; platform: string; secretsAvailable: boolean };
 }
 
@@ -123,6 +125,7 @@ export function createHandlers(svc: Services, platform: Platform): Handlers {
     "settings:set": async (p) => {
       const next = await svc.updateSettings((s) => ({ ...s, ...Object.fromEntries(Object.entries(p).filter(([, v]) => v !== undefined)) }));
       if (p.launchAtLogin !== undefined) platform.setLoginItem(p.launchAtLogin);
+      if (p.theme !== undefined) platform.applyTheme?.(p.theme);
       return settingsDto(next);
     },
     "memory:list": async () => memoryDto(await svc.memory.list()),

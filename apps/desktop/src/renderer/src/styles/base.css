@@ -271,6 +271,8 @@ code {
 
 .segmented {
   display: inline-flex;
+  justify-self: start;
+  width: fit-content;
   border: 1px solid var(--line-strong);
   border-radius: var(--r);
   padding: 2px;

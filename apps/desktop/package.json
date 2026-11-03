@@ -1,6 +1,6 @@
 {
   "name": "@easily/desktop",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Easily desktop app",
   "main": "./out/main/index.js",
@@ -16,8 +16,6 @@
     "@anthropic-ai/bedrock-sdk": "^1.1.1",
     "@anthropic-ai/sdk": "^1.4.0",
     "@anthropic-ai/vertex-sdk": "^1.1.1",
-    "@easily/core": "workspace:*",
-    "@easily/mcp-catalog": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "croner": "^9.0.0",
     "electron-updater": "^6.3.0",
@@ -28,6 +26,8 @@
     "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
+    "@easily/core": "workspace:*",
+    "@easily/mcp-catalog": "workspace:*",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@types/node": "^22.0.0",
     "@types/react": "^18.3.0",
@@ -45,5 +45,7 @@
     "vite": "^5.4.0",
     "vitest": "^2.1.0",
     "zustand": "^5.0.0"
-  }
+  },
+  "author": "Easily",
+  "homepage": "https://github.com/purplemacaron/easily"
 }

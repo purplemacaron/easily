@@ -23,7 +23,7 @@
 - [x] `pnpm typecheck` · `pnpm lint` · `pnpm test` 통과 (로컬 확인; CI 실행은 push 후 확인)
 - [x] `pnpm dev` 로 Electron 창이 뜨고 UI가 보임 (main 프로세스 오류 없음 확인)
 - [ ] GitHub 저장소 생성, Pages 소스를 "GitHub Actions"로 설정, 사이트 배포 확인
-- [ ] 폰트 번들(Pretendard Variable, JetBrains Mono) → `apps/desktop/src/renderer/src/assets/fonts`
+- [x] 폰트 번들(Pretendard Variable, JetBrains Mono) — `pretendard` / `@fontsource/jetbrains-mono` 패키지를 렌더러 번들에 포함(오프라인 동작)
 
 **완료 기준:** 새 클론에서 `pnpm i && pnpm dev` 한 번으로 앱 실행, main 브랜치 푸시 시 사이트 자동 배포.
 
@@ -36,9 +36,9 @@
 - [ ] `core/tools/builtin`: read, write, edit(문자열 치환), glob, grep, shell(PowerShell/bash), web_fetch, web_search(서버툴), todo — **web_search 만 미구현**
 - [x] `core/permissions`: 모드 4종(ask / auto-edit / plan / yolo) + allow/deny 규칙 + 세션 단위 "항상 허용"
 - [ ] `core/session`: SQLite 저장, 세션 목록/검색/이어하기/포크 — 파일 기반(JSON+JSONL) 저장으로 대체, 목록/이어하기 완료, **검색·포크 미구현**
-- [ ] 앱: 채팅 화면 실데이터 연결, 스트리밍 렌더, 툴 호출 접기/펼치기, 권한 요청 인라인 카드
-- [ ] 앱: 설정 › 모델 — provider 로고 그리드, 연결 추가 시트(키·baseURL·모델 선택·테스트 버튼)
-- [ ] 비용/토큰 계산 및 표시 (provider별 단가 테이블, 캐시 적중 표시) — 계산·저장·`cost` 이벤트 완료(Anthropic 기본 3모델만 단가 있음), **표시는 UI 작업**
+- [x] 앱: 채팅 화면 실데이터 연결, 스트리밍 렌더(마크다운), 툴 호출 접기/펼치기, 권한 요청 인라인 카드(Enter=허용), Esc 중단
+- [x] 앱: 설정 › 모델 — provider 로고 그리드, 연결 추가 시트(키·baseURL·모델 ID), 테스트 버튼(지연시간), 역할별 모델 지정
+- [x] 비용/토큰 계산 및 표시 (provider별 단가 테이블, 캐시 적중 표시) — 계산·저장·`cost` 이벤트 완료(Anthropic 기본 3모델만 단가 있음), 표시는 인스펙터·턴 푸터에 완료
 
 **완료 기준:** 폴더를 열고 "이 폴더의 md 파일을 요약해서 summary.md로 저장"을 Anthropic·OpenAI 호환(Ollama) 두 연결로 각각 성공. 쓰기 전 승인 카드가 뜬다.
 
@@ -64,7 +64,7 @@
 - [ ] `mcp-catalog/catalog.json` 60+ 항목 (이름, 설명, 로고, 설치 방식 npx/uvx/docker/remote, 필요한 env, OAuth 여부)
 - [x] 설치기: 런타임 감지(node/uv/docker) → 없으면 안내 or 내장 런타임 다운로드 → 설정 기록 → 연결 → `tools/list` 헬스체크 — 안내까지만(내장 런타임 다운로드 없음), 실패 시 전체 롤백. stdio·streamable HTTP 지원
 - [ ] 원격 MCP OAuth (브라우저 열기 → `easily://oauth/callback` 딥링크 수신)
-- [ ] 딥링크 `easily://mcp/install?id=...` — 사이트의 "Easily에 추가" 버튼
+- [ ] 딥링크 `easily://mcp/install?id=...` — 사이트의 "Easily에 추가" 버튼 — **앱 쪽(설치 시트 열기)은 완료, 사이트 버튼 미구현**
 - [ ] MCP 툴이 많을 때 툴 검색(지연 로딩)으로 컨텍스트 절약
 - [ ] Claude Desktop / Claude Code / Cursor 의 기존 MCP 설정 가져오기
 - [x] 서버별 on/off, 로그 보기, 재시작, 권한 규칙 — 권한은 `mcp__서버__툴` 글롭 규칙(settings.rules)
@@ -78,7 +78,7 @@
 - [ ] 트리거: 파일/폴더 변경, 앱 시작, 슬립 복귀, 로컬 웹훅(127.0.0.1), 이메일 수신(MCP 경유), 클립보드 패턴 — 앱 시작·슬립 복귀만
 - [x] 놓친 실행 보충(슬립/종료 중이었던 작업), 동시 실행 제한, 재시도·백오프
 - [x] 작업별 권한 프로필, 예산 상한(달러), 타임아웃 (토큰 상한은 없음)
-- [ ] 실행 기록 화면 (출력, 비용, 변경 파일, 다시 실행) — 백엔드(`jobs:runs`, 요약·비용·변경 파일 저장)만 완료, **화면은 UI 작업**
+- [x] 실행 기록 화면 (출력 요약, 비용, 변경 파일 수, 지금 실행, 세션 열기) — 예약 작업 화면에서 펼쳐 봄
 - [ ] 결과 전달: OS 알림, 파일, 메일/슬랙(MCP), 앱 내 받은편지함 — OS 알림만
 - [ ] 워크플로 빌더: 단계(프롬프트/툴/조건/반복/승인)를 연결한 파이프라인, 리스트 UI 우선(노드 그래프는 Phase 7)
 
