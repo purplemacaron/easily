@@ -36,9 +36,55 @@
   document.querySelectorAll("[data-repo-link]").forEach(function (a) {
     a.href = "https://github.com/" + REPO;
   });
+  // One-click download: links start at the releases page and are swapped for the
+  // actual installer URLs once the latest release's assets are known.
+  var RELEASES = "https://github.com/" + REPO + "/releases/latest";
+  var OS_NAME = { win: "Windows", mac: "macOS", linux: "Linux" };
+  var ASSET = {
+    win: [/Setup.*\.exe$/i, /\.exe$/i],
+    mac: [/arm64\.dmg$/i, /\.dmg$/i],
+    linux: [/\.AppImage$/i, /\.deb$/i],
+  };
+  var ua = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent;
+  var myOs = /win/i.test(ua) ? "win" : /mac|iphone|ipad/i.test(ua) ? "mac" : /linux|x11/i.test(ua) ? "linux" : null;
+  var isMobile = /android|iphone|ipad|mobile/i.test(navigator.userAgent);
+
+  var hero = $("#hero-download");
+  if (myOs && !isMobile) hero.textContent = OS_NAME[myOs] + "용 다운로드";
+
   document.querySelectorAll("[data-release-link]").forEach(function (a) {
-    a.href = "https://github.com/" + REPO + "/releases/latest";
+    a.href = RELEASES;
   });
+
+  function pick(assets, os) {
+    for (var i = 0; i < ASSET[os].length; i++) {
+      for (var j = 0; j < assets.length; j++) {
+        if (ASSET[os][i].test(assets[j].name)) return assets[j];
+      }
+    }
+    return null;
+  }
+
+  fetch("https://api.github.com/repos/" + REPO + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+    .then(function (r) {
+      return r.ok ? r.json() : null;
+    })
+    .then(function (rel) {
+      if (!rel || !rel.assets) return;
+      var urls = {};
+      ["win", "mac", "linux"].forEach(function (os) {
+        var asset = pick(rel.assets, os);
+        if (asset) urls[os] = asset.browser_download_url;
+      });
+      document.querySelectorAll("[data-os]").forEach(function (a) {
+        var u = urls[a.dataset.os];
+        if (u) a.href = u;
+      });
+      if (myOs && !isMobile && urls[myOs]) hero.href = urls[myOs];
+    })
+    .catch(function () {
+      // Offline or rate-limited: the links keep pointing at the releases page.
+    });
 
   var logos = $("#logos");
   PROVIDERS.forEach(function (p) {
