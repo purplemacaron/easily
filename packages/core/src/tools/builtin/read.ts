@@ -1,17 +1,18 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { z } from "zod";
+import { normPath, PathRefusedError, resolveInWorkspace } from "../paths.js";
 import type { Tool } from "../types.js";
 
 const MAX_LINES = 2000;
+/** The read tool caps its own output (it is exempt from spilling so spilled files stay readable). */
+const MAX_CHARS = 30_000;
 
 const input = z.object({
   path: z.string().describe("Path relative to the workspace root, or absolute inside it"),
-  offset: z.number().int().min(0).optional(),
-  limit: z.number().int().min(1).max(MAX_LINES).optional(),
+  offset: z.number().int().min(0).optional().describe("0-based line to start at"),
+  limit: z.number().int().min(1).max(MAX_LINES).optional().describe("Number of lines to return"),
 });
 
-/** Reference built-in tool. Copy this shape for write/edit/glob/grep/shell/todo (T-002..T-007). */
 export const readTool: Tool<typeof input> = {
   name: "read",
   description:
@@ -19,17 +20,31 @@ export const readTool: Tool<typeof input> = {
   input,
   risk: "read",
   parallelSafe: true,
-  summarize: (i) => i.path,
+  summarize: (i) => normPath(i.path),
   async run({ path: p, offset = 0, limit = MAX_LINES }, ctx) {
-    const root = path.resolve(ctx.cwd);
-    const abs = path.resolve(root, p);
-    if (abs !== root && !abs.startsWith(root + path.sep)) {
-      return { content: `Refused: ${p} is outside the workspace`, isError: true };
+    let abs: string;
+    try {
+      abs = resolveInWorkspace(ctx, p, "read");
+    } catch (e) {
+      if (e instanceof PathRefusedError) return { content: e.message, isError: true };
+      throw e;
     }
-    const lines = (await readFile(abs, "utf8")).split(/\r?\n/);
+    let text: string;
+    try {
+      text = await readFile(abs, "utf8");
+    } catch (e) {
+      return { content: `Cannot read ${p}: ${(e as NodeJS.ErrnoException).code ?? (e as Error).message}`, isError: true };
+    }
+    if (text.includes("\u0000")) return { content: `${p} looks like a binary file; not shown.`, isError: true };
+    const lines = text.split(/\r?\n/);
     const slice = lines.slice(offset, offset + limit);
-    const body = slice.map((l, i) => `${String(offset + i + 1).padStart(6)}\t${l}`).join("\n");
+    let body = slice.map((l, i) => `${String(offset + i + 1).padStart(6)}\t${l}`).join("\n");
+    let note = "";
+    if (body.length > MAX_CHARS) {
+      body = body.slice(0, MAX_CHARS);
+      note = `\n… output cut at ${MAX_CHARS} characters; read again with a smaller limit/offset`;
+    }
     const rest = lines.length - offset - limit;
-    return { content: rest > 0 ? `${body}\n… ${rest} more lines` : body };
+    return { content: body + note + (rest > 0 ? `\n… ${rest} more lines` : "") };
   },
 };

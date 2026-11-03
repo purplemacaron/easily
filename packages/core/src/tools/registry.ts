@@ -19,17 +19,33 @@ export class ToolRegistry {
     this.tools.delete(name);
   }
 
+  /** Removes every tool whose name starts with `prefix` (used when an MCP server disconnects). */
+  unregisterPrefix(prefix: string): number {
+    let n = 0;
+    for (const name of [...this.tools.keys()]) {
+      if (name.startsWith(prefix)) {
+        this.tools.delete(name);
+        n++;
+      }
+    }
+    return n;
+  }
+
   get(name: string): Tool | undefined {
     return this.tools.get(name);
   }
 
+  names(): string[] {
+    return [...this.tools.keys()].sort();
+  }
+
   definitions(): ToolDefinition[] {
     return [...this.tools.values()]
-      .sort((a, b) => a.name.localeCompare(b.name))
+      .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
       .map((t) => ({
         name: t.name,
         description: t.description,
-        input_schema: zodToJsonSchema(t.input, { target: "openApi3" }) as ToolDefinition["input_schema"],
+        input_schema: (t.jsonSchema ?? zodToJsonSchema(t.input, { target: "openApi3" })) as ToolDefinition["input_schema"],
       }));
   }
 }
