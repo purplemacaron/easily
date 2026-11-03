@@ -191,6 +191,21 @@ describe("runTurn", () => {
     expect(provider.requests).toHaveLength(1);
   });
 
+  it("reports aborted when the provider stream ends quietly after an abort", async () => {
+    const ac = new AbortController();
+    const provider = fakeProvider([reply([text("partial")], "end_turn")]);
+    const inner = provider.stream.bind(provider);
+    provider.stream = async function* (req) {
+      for await (const ev of inner(req)) {
+        if (ev.type === "text_delta") ac.abort(); // user hits Esc mid-stream; the SDK just stops iterating
+        yield ev;
+      }
+    };
+    const { events, produced } = await collect(runTurn([], "go", opts(provider, new ToolRegistry(), { signal: ac.signal })));
+    expect(events.at(-1)).toEqual({ type: "stopped", reason: "aborted" });
+    expect(produced.some((m) => m.role === "assistant")).toBe(false);
+  });
+
   it("turns provider errors into a stopped:error event", async () => {
     const { events } = await collect(runTurn([], "go", opts(fakeProvider([new Error("boom sk-ant-abcdefghijklmnop")]), new ToolRegistry())));
     const last = events.at(-1);

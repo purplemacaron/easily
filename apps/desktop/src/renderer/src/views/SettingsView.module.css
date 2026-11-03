@@ -1,0 +1,12 @@
+.label {
+  width: 160px;
+  flex: none;
+}
+.select {
+  max-width: 200px;
+}
+.path {
+  flex: 1;
+  min-width: 0;
+  color: var(--ink-2);
+}

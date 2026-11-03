@@ -1,0 +1,64 @@
+.expand {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.chev {
+  flex: none;
+  color: var(--ink-3);
+  transition: transform var(--dur) var(--ease);
+}
+.chev[data-open="true"] {
+  transform: rotate(90deg);
+}
+.runs {
+  padding: var(--s-2) 0 var(--s-3) 38px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 2px;
+}
+.run {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 26px;
+  font-size: var(--fs-12);
+}
+.runTime {
+  width: 88px;
+  flex: none;
+  font-family: var(--font-mono);
+  color: var(--ink-2);
+}
+.runStatus {
+  width: 56px;
+  flex: none;
+}
+.runSummary {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink-3);
+}
+.runCost {
+  font-family: var(--font-mono);
+  color: var(--ink-3);
+}
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+.toggles {
+  display: grid;
+  gap: var(--s-2);
+}
+.toggles label {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}

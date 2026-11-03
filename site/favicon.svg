@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Easily favicon: geometric "E" on sky blue. The site/app logo itself is text-only. -->
-  <rect width="32" height="32" rx="7" fill="#2B9AF3"/>
+  <!-- Easily favicon: geometric "E" on blue. The site/app logo itself is text-only. -->
+  <rect width="32" height="32" rx="7" fill="#1A5CFF"/>
   <path fill="#FFFFFF" d="M10 8h12v3.25h-8.5v3.1H21v3.25h-7.5v3.15H22V24H10z"/>
 </svg>

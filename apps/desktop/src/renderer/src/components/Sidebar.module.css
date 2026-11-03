@@ -1,0 +1,125 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg-sunken);
+  border-right: 1px solid var(--line);
+}
+.logo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: var(--titlebar-h);
+  padding: 0 var(--s-4);
+  font-size: var(--fs-15);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  -webkit-app-region: drag;
+  user-select: none;
+}
+.top {
+  padding: 0 var(--s-3) var(--s-2);
+}
+.newBtn {
+  width: 100%;
+  justify-content: flex-start;
+}
+.newBtn kbd {
+  margin-left: auto;
+}
+.nav {
+  display: grid;
+  gap: 1px;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--line);
+}
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 28px;
+  padding: 0 var(--s-2);
+  border-radius: var(--r);
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.navItem:hover {
+  background: var(--bg-hover);
+  color: var(--ink);
+}
+.navItem[data-active="true"] {
+  color: var(--ink);
+  font-weight: 500;
+}
+.navItem[data-active="true"]::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+.sessions {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--s-2) var(--s-3) var(--s-3);
+  display: grid;
+  align-content: start;
+  gap: 1px;
+}
+.sessionItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--r);
+}
+.sessionItem:hover,
+.sessionItem[data-active="true"] {
+  background: var(--bg-hover);
+}
+.sessionItem[data-active="true"] .sessionMain {
+  color: var(--ink);
+  font-weight: 500;
+}
+.sessionMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 28px;
+  padding: 0 var(--s-2);
+  color: var(--ink-2);
+}
+.when {
+  margin-left: auto;
+  padding-left: var(--s-2);
+  font-size: var(--fs-11);
+  color: var(--ink-3);
+  font-weight: 400;
+  flex: none;
+}
+.actions {
+  display: none;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  padding-left: var(--s-2);
+  background: var(--bg-hover);
+  border-radius: var(--r);
+}
+.sessionItem:hover .actions,
+.sessionItem:focus-within .actions {
+  display: flex;
+}
+.sessionItem:hover .when,
+.sessionItem:focus-within .when {
+  visibility: hidden;
+}
+.rename {
+  height: 28px;
+}

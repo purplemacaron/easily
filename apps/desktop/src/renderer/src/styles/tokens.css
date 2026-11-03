@@ -13,7 +13,9 @@
   --ink: #111111;
   --ink-2: #5c5c58;
   --ink-3: #9a9a95;
-  --accent: #2b9af3;
+  --accent: #1a5cff;
+  --accent-hover: #1450e0;
+  --on-accent: #ffffff;
   --ok: #1f8a4c;
   --warn: #b26b00;
   --err: #d12c2c;
@@ -61,7 +63,9 @@
   --ink: #ededea;
   --ink-2: #a3a39e;
   --ink-3: #6b6b66;
-  --accent: #5cb4f7;
+  --accent: #6b95ff;
+  --accent-hover: #8aaeff;
+  --on-accent: #0f0f0e;
   --ok: #3fb26f;
   --warn: #d99a2b;
   --err: #f05252;

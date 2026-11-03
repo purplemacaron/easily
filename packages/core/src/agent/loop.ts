@@ -139,6 +139,11 @@ export async function* runTurn(
       yield { type: "stopped", reason: "error", detail: describeProviderError(e).message };
       return produced;
     }
+    // Some SDKs end a streamed response quietly (no throw) when aborted; the partial message is dropped.
+    if (opts.signal.aborted) {
+      yield { type: "stopped", reason: "aborted" };
+      return produced;
+    }
     if (!final) {
       yield { type: "stopped", reason: "error", detail: "provider ended without a final message" };
       return produced;

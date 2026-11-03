@@ -8,3 +8,18 @@
   width: 100%;
   height: 100%;
 }
+
+/* lobehub icons are dark glyphs on transparent: keep them readable on the dark theme */
+:global([data-theme="dark"]) img.logo {
+  filter: invert(1);
+}
+
+.letter {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  color: var(--ink-2);
+  font-weight: 600;
+}

@@ -1,0 +1,19 @@
+.item {
+  width: 100%;
+  transition: background var(--dur) var(--ease);
+}
+.item:hover {
+  background: var(--bg-sunken);
+}
+.when {
+  flex: none;
+  width: 72px;
+  text-align: right;
+  font-size: var(--fs-12);
+  color: var(--ink-3);
+}
+.two {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: var(--s-3);
+}

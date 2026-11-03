@@ -7,7 +7,7 @@
   --ink: #111111;
   --ink-2: #5c5c58;
   --ink-3: #9a9a95;
-  --accent: #2b9af3;
+  --accent: #1A5CFF;
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI", system-ui, sans-serif;
   --wrap: 960px;
   --gutter: 24px;
@@ -22,7 +22,7 @@
     --ink: #ededea;
     --ink-2: #a3a39e;
     --ink-3: #6b6b66;
-    --accent: #5cb4f7;
+    --accent: #6B95FF;
   }
 }
 
