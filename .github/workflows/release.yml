@@ -27,5 +27,7 @@ jobs:
         run: pnpm --filter @easily/desktop dist -- --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Unsigned until G-002: don't let electron-builder look for a signing identity.
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
           # TODO(P7, G-002): code signing
           # CSC_LINK / CSC_KEY_PASSWORD (Windows, macOS), APPLE_ID / APPLE_APP_SPECIFIC_PASSWORD / APPLE_TEAM_ID

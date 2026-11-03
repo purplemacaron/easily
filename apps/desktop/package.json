@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "description": "Easily desktop app",
+  "author": {
+    "name": "purplemacaron",
+    "email": "261107279+purplemacaron@users.noreply.github.com"
+  },
+  "homepage": "https://purplemacaron.github.io/easily/",
   "main": "./out/main/index.js",
   "scripts": {
     "dev": "electron-vite dev",

@@ -28,6 +28,7 @@ linux:
   target: [AppImage, deb]
   icon: build/icon.png
   category: Office
+  maintainer: purplemacaron <261107279+purplemacaron@users.noreply.github.com>
 publish:
   provider: github
   # explicit: electron-builder cannot find .git/config from apps/desktop in this monorepo
