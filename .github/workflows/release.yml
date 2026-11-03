@@ -24,7 +24,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Build & publish
-        run: pnpm --filter @easily/desktop dist -- --publish always
+        run: pnpm --filter @easily/desktop run dist --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Unsigned until G-002: don't let electron-builder look for a signing identity.

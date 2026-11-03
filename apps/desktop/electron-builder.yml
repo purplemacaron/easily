@@ -29,6 +29,11 @@ linux:
   icon: build/icon.png
   category: Office
   maintainer: purplemacaron <261107279+purplemacaron@users.noreply.github.com>
+  # The npm name "@easily/desktop" would otherwise leak into the .deb name/path ("release/@easily/...").
+  executableName: easily
+  artifactName: Easily-${version}-linux-${arch}.${ext}
+deb:
+  packageName: easily
 publish:
   provider: github
   # explicit: electron-builder cannot find .git/config from apps/desktop in this monorepo
