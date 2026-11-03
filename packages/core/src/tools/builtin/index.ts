@@ -17,3 +17,4 @@ export function registerBuiltinTools(registry: ToolRegistry): void {
 
 export { editTool, globTool, grepTool, readTool, shellTool, todoTool, webFetchTool, writeTool };
 export { htmlToText } from "./web-fetch.js";
+export { SHELL_NAME } from "./shell.js";
