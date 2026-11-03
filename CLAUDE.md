@@ -60,6 +60,12 @@ pnpm site              # 사이트 로컬 미리보기 (http://localhost:4321)
 5. 커밋: Conventional Commits + 기능 ID. 예) `feat(core): openai-compatible adapter (M-003)`
 6. PLAN.md 체크박스 체크. 설계가 바뀌었으면 ARCHITECTURE.md도 같은 커밋에서 수정.
 
+## 환경 메모 (Windows)
+
+- 저장소 경로가 길면(260자 초과) esbuild·electron 의 `postinstall` 이 실패한다. 이 클론은 **커밋하지 않는** 루트 `.npmrc` 에 `virtual-store-dir=C:/ez/vs` 를 두고 설치했다(`.git/info/exclude` 로 제외). 짧은 경로에 클론했다면 필요 없다.
+- `pnpm dev` 로 만든 프로필을 건드리지 않으려면 `EASILY_USER_DATA=<임시 폴더>` 로 실행한다.
+- IPC 채널을 추가할 때: `shared/ipc.ts`(zod + 응답 타입) → `shared/channels.ts` → `main/handlers.ts`(누락 시 컴파일 오류). `ipc.test.ts` 가 두 목록의 일치를 검사한다.
+
 ## 하지 말 것
 
 - 계획에 없는 대규모 리팩터링, 의존성 무단 추가(추가 시 PR 설명에 이유).

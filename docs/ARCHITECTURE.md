@@ -59,7 +59,7 @@ easily/
 | 셸 | **Electron** + electron-vite | MCP SDK·child_process·node 생태계를 그대로 사용. 트레이/로그인 실행/powerMonitor 기본 제공 |
 | UI | React 18 + TypeScript, **CSS Modules + CSS 변수** | Tailwind/컴포넌트 키트 금지 — 기본값 미감(=AI 슬롭) 차단 |
 | 상태 | Zustand (renderer), core는 순수 이벤트 이미터 | 단순 |
-| 저장소 | SQLite (`better-sqlite3`) + Drizzle ORM, 파일은 `userData/` | 로컬 우선, 동기식이라 하네스 루프에 적합 |
+| 저장소 | **JSON + append-only JSONL 파일** (`userData/`, §7). 당초 계획의 `better-sqlite3`는 Electron ABI별 네이티브 재빌드가 필요하고 vitest(Node ABI)와 충돌해 v0.1에서 제외 | 로컬 우선, 의존성 0, append-only 히스토리 규칙과 잘 맞음. 세션 검색·트레이스가 커지면 `node:sqlite`로 교체(저장소 인터페이스 `SessionStore` 뒤) |
 | LLM | `@anthropic-ai/sdk` (기본 `claude-opus-5-5`), provider 인터페이스로 확장 | 하네스 품질은 모델 품질 |
 | MCP | `@modelcontextprotocol/sdk` client (stdio + streamable HTTP + OAuth) | 표준 |
 | 스케줄 | `croner` + Electron `powerMonitor` | 순수 JS, 슬립 복귀 시 놓친 작업 보충 실행 |
@@ -149,14 +149,21 @@ provider는 **"종류(kind)" × "인스턴스(connection)"** 구조다. 종류�
 
 ```
 %APPDATA%/Easily/  (macOS: ~/Library/Application Support/Easily)
-├─ easily.db                 세션, 메시지, 잡, 실행기록, 트레이스, 개선안
-├─ settings.json             사용자 설정 (zod 스키마로 마이그레이션)
-├─ secrets.bin               safeStorage로 암호화된 키
+├─ sessions/<id>.json        세션 메타(제목, cwd, 모드, 누적 토큰·비용)
+├─ sessions/<id>.jsonl       append-only 로그: 메시지 + 호출별 사용량
+├─ jobs.json · job-runs.json 예약 작업 정의 · 실행 기록
+├─ connections.json          모델 연결(키 제외) — 모델 목록·능력 캐시 포함
+├─ mcp.json                  설치된 MCP 서버 (비밀값은 secrets.bin)
+├─ settings.json             사용자 설정 (zod 스키마, 역할별 모델 바인딩 포함)
+├─ secrets.bin               safeStorage로 암호화된 키 (참조 이름 → 암호문)
 ├─ memory/                   메모리 파일 (MEMORY.md 인덱스 + 1사실 1파일)
-├─ skills/                   사용자 스킬 (자기개선이 만든 스킬 포함, 버전 관리됨)
-├─ checkpoints/<session>/    섀도 git 저장소
-└─ logs/
+├─ spill/<session>/          너무 큰 툴 결과 (모델에는 요약만 전달)
+├─ skills/                   사용자 스킬 (자기개선이 만든 스킬 포함, 버전 관리됨)  [미구현]
+├─ checkpoints/<session>/    쓰기 직전 파일 백업 + 되감기 매니페스트 (섀도 git은 Phase 2)
+└─ logs/                     [미구현]
 ```
+`EASILY_USER_DATA` 환경변수로 데이터 폴더를 바꿀 수 있다(테스트·스모크 실행용).
+트레이스·개선안(Phase 5)은 같은 방식의 파일 저장소로 추가한다.
 프로젝트 단위 설정은 작업 폴더의 `.easily/` (settings, skills, hooks, EASILY.md).
 
 ## 8. 보안 원칙
