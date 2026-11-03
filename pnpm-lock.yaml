@@ -26,18 +26,45 @@ importers:
 
   apps/desktop:
     dependencies:
+      '@anthropic-ai/bedrock-sdk':
+        specifier: ^1.1.1
+        version: 1.1.1(zod@3.25.76)
+      '@anthropic-ai/sdk':
+        specifier: ^1.4.0
+        version: 1.4.0(zod@3.25.76)
+      '@anthropic-ai/vertex-sdk':
+        specifier: ^1.1.1
+        version: 1.1.1(zod@3.25.76)
       '@easily/core':
         specifier: workspace:*
         version: link:../../packages/core
       '@easily/mcp-catalog':
         specifier: workspace:*
         version: link:../../packages/mcp-catalog
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.32.2
+        version: 1.32.2(zod@3.25.76)
+      croner:
+        specifier: ^9.0.0
+        version: 9.1.0
       electron-updater:
         specifier: ^6.3.0
         version: 6.8.11
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
+      openai:
+        specifier: ^7.47.0
+        version: 7.47.0(@aws-sdk/credential-provider-node@3.972.92)(@smithy/signature-v4@5.7.5)(google-auth-library@10.9.1)(undici@7.30.1)(zod@3.25.76)
+      picomatch:
+        specifier: ^4.0.7
+        version: 4.0.7
       zod:
         specifier: ^3.23.8
         version: 3.25.76
+      zod-to-json-schema:
+        specifier: ^3.23.5
+        version: 3.25.2(zod@3.25.76)
     devDependencies:
       '@types/node':
         specifier: ^22.0.0

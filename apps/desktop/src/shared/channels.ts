@@ -1,0 +1,47 @@
+/**
+ * Runtime list of invoke channels, free of any dependency so the sandboxed preload can import
+ * it. `ipc.test.ts` asserts it matches the zod map in ipc.ts exactly.
+ */
+export const INVOKE_CHANNELS = [
+  "session:list",
+  "session:create",
+  "session:get",
+  "session:rename",
+  "session:delete",
+  "session:send",
+  "session:abort",
+  "session:setMode",
+  "session:setEffort",
+  "session:checkpoints",
+  "session:rewind",
+  "permission:answer",
+  "provider:list",
+  "provider:connect",
+  "provider:test",
+  "provider:delete",
+  "provider:setRole",
+  "settings:get",
+  "settings:set",
+  "memory:list",
+  "memory:upsert",
+  "memory:delete",
+  "jobs:list",
+  "jobs:create",
+  "jobs:update",
+  "jobs:delete",
+  "jobs:runNow",
+  "jobs:stop",
+  "jobs:runs",
+  "mcp:catalog",
+  "mcp:list",
+  "mcp:install",
+  "mcp:addCustom",
+  "mcp:remove",
+  "mcp:setEnabled",
+  "mcp:restart",
+  "app:openExternal",
+  "app:pickFolder",
+  "app:info",
+] as const;
+
+export const PUSH_CHANNELS = ["session:event", "job:event", "mcp:event", "deeplink"] as const;

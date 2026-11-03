@@ -83,8 +83,17 @@ interface Running {
 
 interface PendingPermission {
   sessionId: string;
+  input: unknown;
   call: { tool: string; risk: ToolRisk; argSummary: string };
   resolve(allow: boolean): void;
+}
+
+export interface PendingPermissionInfo {
+  id: string;
+  name: string;
+  input: unknown;
+  risk: ToolRisk;
+  summary: string;
 }
 
 const DEFAULT_TITLE = "새 세션";
@@ -106,6 +115,13 @@ export class SessionService {
   }
   runningSessions(): string[] {
     return [...this.running.keys()];
+  }
+
+  /** Permission cards still waiting for an answer (lets a reloaded UI redraw them). */
+  pendingPermissions(sessionId: string): PendingPermissionInfo[] {
+    return [...this.pending.entries()]
+      .filter(([, p]) => p.sessionId === sessionId)
+      .map(([id, p]) => ({ id, name: p.call.tool, input: p.input, risk: p.call.risk, summary: p.call.argSummary }));
   }
 
   abort(sessionId: string): void {
@@ -214,7 +230,7 @@ export class SessionService {
         const summary = tool?.summarize?.(req.input as never) ?? "";
         if (options.askPermission) return options.askPermission({ ...req, risk, summary });
         return new Promise<boolean>((resolve) => {
-          this.pending.set(req.id, { sessionId, call: { tool: req.name, risk, argSummary: summary }, resolve });
+          this.pending.set(req.id, { sessionId, input: req.input, call: { tool: req.name, risk, argSummary: summary }, resolve });
         });
       };
 

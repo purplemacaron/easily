@@ -13,10 +13,19 @@
     "dist": "electron-vite build && electron-builder"
   },
   "dependencies": {
+    "@anthropic-ai/bedrock-sdk": "^1.1.1",
+    "@anthropic-ai/sdk": "^1.4.0",
+    "@anthropic-ai/vertex-sdk": "^1.1.1",
     "@easily/core": "workspace:*",
     "@easily/mcp-catalog": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "croner": "^9.0.0",
     "electron-updater": "^6.3.0",
-    "zod": "^3.23.8"
+    "fast-glob": "^3.3.3",
+    "openai": "^7.47.0",
+    "picomatch": "^4.0.7",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
