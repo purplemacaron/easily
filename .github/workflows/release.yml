@@ -1,0 +1,31 @@
+name: Release
+
+# Push a tag like v0.1.0 → build installers on all three OSes → draft GitHub Release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build & publish
+        run: pnpm --filter @easily/desktop dist -- --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # TODO(P7, G-002): code signing
+          # CSC_LINK / CSC_KEY_PASSWORD (Windows, macOS), APPLE_ID / APPLE_APP_SPECIFIC_PASSWORD / APPLE_TEAM_ID

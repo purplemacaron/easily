@@ -1,0 +1,124 @@
+{
+  "$comment": "One-click MCP catalog (C-001). Target: 60+ entries. Every entry starts verified:false — before shipping, install it on a clean machine, confirm tools/list works, then set verified:true. Unverified entries are hidden in release builds.",
+  "version": 1,
+  "servers": [
+    {
+      "id": "filesystem",
+      "name": "Filesystem",
+      "description": "지정한 폴더의 파일 읽기·쓰기",
+      "category": "core",
+      "logo": "easily:folder",
+      "install": { "type": "npx", "package": "@modelcontextprotocol/server-filesystem", "args": ["{{folders}}"] },
+      "inputs": [{ "key": "folders", "label": "허용 폴더", "kind": "folder-list", "required": true }],
+      "verified": false
+    },
+    {
+      "id": "memory",
+      "name": "Knowledge Graph Memory",
+      "description": "지식 그래프 기반 장기 기억",
+      "category": "core",
+      "logo": "easily:memory",
+      "install": { "type": "npx", "package": "@modelcontextprotocol/server-memory" },
+      "verified": false
+    },
+    {
+      "id": "fetch",
+      "name": "Fetch",
+      "description": "웹 페이지를 마크다운으로 가져오기",
+      "category": "web",
+      "logo": "easily:globe",
+      "install": { "type": "uvx", "package": "mcp-server-fetch" },
+      "verified": false
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "description": "로컬 git 저장소 조회·조작",
+      "category": "dev",
+      "logo": "git",
+      "install": { "type": "uvx", "package": "mcp-server-git", "args": ["--repository", "{{repo}}"] },
+      "inputs": [{ "key": "repo", "label": "저장소 폴더", "kind": "folder", "required": true }],
+      "verified": false
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "description": "이슈·PR·코드 검색 (원격, OAuth)",
+      "category": "dev",
+      "logo": "github",
+      "install": { "type": "remote", "url": "https://api.githubcopilot.com/mcp/", "auth": "oauth" },
+      "verified": false
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright",
+      "description": "브라우저 자동화",
+      "category": "web",
+      "logo": "easily:browser",
+      "install": { "type": "npx", "package": "@playwright/mcp" },
+      "verified": false
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "description": "페이지·데이터베이스 검색과 작성 (원격, OAuth)",
+      "category": "work",
+      "logo": "notion",
+      "install": { "type": "remote", "url": "https://mcp.notion.com/mcp", "auth": "oauth" },
+      "verified": false
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "description": "이슈·프로젝트 관리 (원격, OAuth)",
+      "category": "work",
+      "logo": "linear",
+      "install": { "type": "remote", "url": "https://mcp.linear.app/mcp", "auth": "oauth" },
+      "verified": false
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "description": "오류·이슈 조회 (원격, OAuth)",
+      "category": "dev",
+      "logo": "sentry",
+      "install": { "type": "remote", "url": "https://mcp.sentry.dev/mcp", "auth": "oauth" },
+      "verified": false
+    },
+    {
+      "id": "context7",
+      "name": "Context7",
+      "description": "라이브러리 최신 문서 검색",
+      "category": "dev",
+      "logo": "easily:book",
+      "install": { "type": "npx", "package": "@upstash/context7-mcp" },
+      "verified": false
+    },
+    {
+      "id": "sequential-thinking",
+      "name": "Sequential Thinking",
+      "description": "단계적 사고 보조",
+      "category": "core",
+      "logo": "easily:steps",
+      "install": { "type": "npx", "package": "@modelcontextprotocol/server-sequential-thinking" },
+      "verified": false
+    },
+    {
+      "id": "time",
+      "name": "Time",
+      "description": "시간대 변환·현재 시각",
+      "category": "core",
+      "logo": "easily:clock",
+      "install": { "type": "uvx", "package": "mcp-server-time" },
+      "verified": false
+    }
+  ],
+  "todo": [
+    "Slack", "Gmail", "Google Calendar", "Google Drive", "Outlook / Microsoft 365", "Teams", "Jira", "Confluence",
+    "Asana", "Trello", "ClickUp", "Monday", "Figma", "Airtable", "Supabase", "Postgres", "SQLite", "MySQL",
+    "Stripe", "HubSpot", "Salesforce", "Zendesk", "Intercom", "Discord", "Telegram", "Dropbox", "Box", "OneDrive",
+    "Todoist", "Obsidian", "Zotero", "Brave Search", "Exa", "Tavily", "Firecrawl", "Puppeteer", "Docker",
+    "Kubernetes", "AWS", "Cloudflare", "Vercel", "Netlify", "GitLab", "Bitbucket", "Hugging Face", "Kakao",
+    "Naver", "Excel", "PowerPoint", "Calendly", "Zoom"
+  ]
+}

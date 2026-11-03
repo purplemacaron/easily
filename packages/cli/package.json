@@ -1,0 +1,17 @@
+{
+  "name": "@easily/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": { "easily": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@easily/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

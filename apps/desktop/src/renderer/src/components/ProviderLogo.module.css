@@ -1,0 +1,10 @@
+.logo {
+  display: inline-flex;
+  flex: none;
+  color: var(--ink);
+}
+
+.logo svg {
+  width: 100%;
+  height: 100%;
+}

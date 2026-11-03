@@ -1,0 +1,29 @@
+appId: app.easily.desktop
+productName: Easily
+directories:
+  buildResources: build
+  output: release/${version}
+files:
+  - "out/**"
+  - "package.json"
+asarUnpack:
+  - "**/*.node"
+protocols:
+  - name: Easily
+    schemes: [easily]
+win:
+  target: [nsis, portable]
+  artifactName: Easily-${version}-win-${arch}.${ext}
+nsis:
+  oneClick: true
+  perMachine: false
+mac:
+  target: [dmg, zip]
+  category: public.app-category.productivity
+  artifactName: Easily-${version}-mac-${arch}.${ext}
+linux:
+  target: [AppImage, deb]
+  category: Office
+publish:
+  provider: github
+  # owner / repo are read from the git remote by electron-builder

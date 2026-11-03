@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Easily</title>
+    <meta name="description" content="맡기면 끝나 있는 업무. 데스크톱 에이전트 하네스." />
+    <meta property="og:title" content="Easily" />
+    <meta property="og:description" content="맡기면 끝나 있는 업무." />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="wrap nav">
+      <a class="logo" href="./">Easily</a>
+      <nav>
+        <a href="#features">기능</a>
+        <a data-repo-link href="#">GitHub</a>
+        <a class="nav-cta" href="#download">다운로드</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="wrap hero">
+        <h1>맡기면 끝나 있는 업무<span class="accent">.</span></h1>
+        <p>업무용 데스크톱 에이전트 하네스</p>
+        <a class="btn" href="#download">다운로드</a>
+      </section>
+
+      <section class="wrap block">
+        <ul class="pillars">
+          <li>하네스</li>
+          <li>자기개선</li>
+          <li>예약 실행</li>
+          <li>원클릭 MCP</li>
+          <li>모든 모델</li>
+        </ul>
+      </section>
+
+      <section class="wrap block" id="models">
+        <h2>모델</h2>
+        <ul class="logos" id="logos"></ul>
+      </section>
+
+      <section class="wrap block" id="features">
+        <h2>기능 <span class="count" data-count="features"></span></h2>
+        <div class="filters">
+          <input id="q" type="search" placeholder="검색" aria-label="기능 검색" />
+          <div id="cats" class="chips" role="tablist" aria-label="카테고리"></div>
+        </div>
+        <ul id="feature-list" class="features"></ul>
+      </section>
+
+      <section class="wrap block" id="download">
+        <h2>다운로드</h2>
+        <ul class="dl">
+          <li><a data-release-link href="#">Windows</a></li>
+          <li><a data-release-link href="#">macOS</a></li>
+          <li><a data-release-link href="#">Linux</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="wrap foot">
+      <span class="logo">Easily</span>
+      <a data-repo-link href="#">GitHub</a>
+    </footer>
+
+    <script src="data/features.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

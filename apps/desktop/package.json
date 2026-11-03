@@ -1,0 +1,37 @@
+{
+  "name": "@easily/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Easily desktop app",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "dist": "electron-vite build && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@easily/core": "workspace:*",
+    "@easily/mcp-catalog": "workspace:*",
+    "better-sqlite3": "^11.3.0",
+    "electron-updater": "^6.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@lobehub/icons": "latest",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "electron": "latest",
+    "electron-builder": "^25.1.0",
+    "electron-vite": "^2.3.0",
+    "lucide-react": "^0.450.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0",
+    "zustand": "^5.0.0"
+  }
+}
